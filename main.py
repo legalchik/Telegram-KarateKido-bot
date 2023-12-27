@@ -6,6 +6,7 @@ from time import sleep
 import pyautogui
 import random
 
+
 pyautogui.PAUSE = 0
 sct = mss.mss()
 
@@ -70,15 +71,14 @@ while True:
         else:
             sleep(random.uniform(0.03, 0.06))
             x=1045
+	    sleep(0.1)
             
 
         cv2.rectangle(scr, max_loc_short, (max_loc_short[0] + w, max_loc_short[1] + h), (0,255,255), 2)
         cv2.rectangle(scr, max_loc_long, (max_loc_long[0] + w, max_loc_long[1] + h), (0,255,255), 2)
 
     cv2.imshow('Screen Shot', scr)
+    sleep(0.3)
     pyautogui.click(x=x, y=y)
     if keyboard.is_pressed('q'):
         break
-
-    # print('sFPS: {}'.format(1 / (time() - fps_time)))
-    # fps_time = time()
