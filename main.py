@@ -1,4 +1,3 @@
-import keyboard
 import mss
 import cv2
 import numpy
@@ -10,26 +9,25 @@ import random
 pyautogui.PAUSE = 0
 sct = mss.mss()
 
-print("Press 's' to start playing.")
-keyboard.wait('s')
+sleep(2)
 
-right = True
+right = False
 x = 1045
 y = 990
 
 dimensions_left = {
-        'left': 800,
-        'top': 600,
-        'width': 150,
-        'height': 150
-    }
+    'left': 805,
+    'top': 600,
+    'width': 135,
+    'height': 130
+}
 
 dimensions_right = {
-		'left': 980,
-        'top': 600,
-        'width': 150,
-        'height': 150
-	}
+    'left': 988,
+    'top': 600,
+    'width': 135,
+    'height': 130
+}
 
 short_right = cv2.imread("short_right.jpg")
 short_left = cv2.imread("short_left.jpg")
@@ -63,22 +61,27 @@ while True:
 
     src = scr.copy()
 
-    if max_val_short > .80 or max_val_long > .80:
+    if max_val_short > .77 or max_val_long > .77:
         right = not right
         if right:
-            sleep(random.uniform(0.04, 0.06))
+            sleep(random.uniform(0.03, 0.05))
             x=860
         else:
-            sleep(random.uniform(0.03, 0.06))
+            sleep(random.uniform(0.03, 0.05))
             x=1045
-	    sleep(0.1)
+        sleep(0.1)
             
 
         cv2.rectangle(scr, max_loc_short, (max_loc_short[0] + w, max_loc_short[1] + h), (0,255,255), 2)
         cv2.rectangle(scr, max_loc_long, (max_loc_long[0] + w, max_loc_long[1] + h), (0,255,255), 2)
 
+    key = cv2.waitKey(1) & 0xFF
+    if key == ord('q'):
+        cv2.destroyAllWindows()
+        exit()
+
+
     cv2.imshow('Screen Shot', scr)
-    sleep(0.3)
+    cv2.setWindowProperty("Screen Shot", cv2.WND_PROP_TOPMOST, 1)
     pyautogui.click(x=x, y=y)
-    if keyboard.is_pressed('q'):
-        break
+    sleep(0.02)
